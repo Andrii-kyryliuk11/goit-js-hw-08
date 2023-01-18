@@ -6,8 +6,8 @@ const refs = {
   submitButton: document.querySelector('form'),
 };
 
-refs.emailInput.addEventListener('input', throttle(onEmailFill));
-refs.textareaInput.addEventListener('input', throttle(onTextareaFill));
+refs.emailInput.addEventListener('input', onEmailFill);
+refs.textareaInput.addEventListener('input', onTextareaFill);
 refs.submitButton.addEventListener('submit', onFormSubmit);
 
 let savedForm = localStorage.getItem('feedback-form-state');
@@ -28,18 +28,20 @@ console.log(refs.emailInput);
 console.log(refs.textareaInput);
 console.log(refs.submitButton);
 
+function writeToLocalStorage() {
+  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
+}
+
 function onEmailFill(evt) {
   const email = evt.currentTarget.value;
-
   formData.email = email;
-
-  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
+  writeToLocalStorage();
 }
 
 function onTextareaFill(evt) {
   const message = evt.currentTarget.value;
   formData.message = message;
-  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
+  writeToLocalStorage();
 }
 
 function onFormSubmit(evt) {
