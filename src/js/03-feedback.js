@@ -6,8 +6,8 @@ const refs = {
   submitButton: document.querySelector('form'),
 };
 
-refs.emailInput.addEventListener('input', onEmailFill);
-refs.textareaInput.addEventListener('input', onTextareaFill);
+refs.emailInput.addEventListener('input', throttle(onEmailFill, 500));
+refs.textareaInput.addEventListener('input', throttle(onTextareaFill, 500));
 refs.submitButton.addEventListener('submit', onFormSubmit);
 
 let savedForm = localStorage.getItem('feedback-form-state');
@@ -24,9 +24,6 @@ function formAutocomplete() {
   }
 }
 
-console.log(refs.emailInput);
-console.log(refs.textareaInput);
-console.log(refs.submitButton);
 
 function writeToLocalStorage() {
   localStorage.setItem('feedback-form-state', JSON.stringify(formData));
