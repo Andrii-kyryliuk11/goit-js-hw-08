@@ -6,8 +6,8 @@ const refs = {
   submitButton: document.querySelector('form'),
 };
 
-refs.emailInput.addEventListener('input', onEmailFill);
-refs.textareaInput.addEventListener('input', onTextareaFill);
+refs.emailInput.addEventListener('input', throttle(onEmailFill));
+refs.textareaInput.addEventListener('input', throttle(onTextareaFill));
 refs.submitButton.addEventListener('submit', onFormSubmit);
 
 let savedForm = localStorage.getItem('feedback-form-state');
