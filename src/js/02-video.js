@@ -35,4 +35,4 @@ const onPlay = function (data) {
   console.log(stringifySavedTime);
 };
 
-player.on('timeupdate', throttle(onPlay, 1000));
+player.on('timeupdate', throttle(onPlay, 100));
