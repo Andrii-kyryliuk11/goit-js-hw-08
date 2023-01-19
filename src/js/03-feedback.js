@@ -6,8 +6,8 @@ const refs = {
   submitButton: document.querySelector('form'),
 };
 
-refs.emailInput.addEventListener('input', throttle(onEmailFill, 500));
-refs.textareaInput.addEventListener('input', throttle(onTextareaFill, 500));
+refs.emailInput.addEventListener('input', onEmailFill);
+refs.textareaInput.addEventListener('input', onTextareaFill);
 refs.submitButton.addEventListener('submit', onFormSubmit);
 
 let savedForm = localStorage.getItem('feedback-form-state');
@@ -18,39 +18,28 @@ formAutocomplete();
 
 function formAutocomplete() {
   if (savedForm) {
-    switch (undefined) {
-      case JSON.parse(savedForm).email:
-        refs.emailInput.value = '';
-        break;
+    refs.emailInput.value = JSON.parse(savedForm).email;
 
-      default:
-        refs.emailInput.value = JSON.parse(savedForm).email;
-
-        break;
-    }
-    switch (undefined) {
-      case JSON.parse(savedForm).message:
-        refs.textareaInput.value = '';
-        break;
-      default:
-        refs.textareaInput.value = JSON.parse(savedForm).message;
-        break;
-    }
+    refs.textareaInput.value = JSON.parse(savedForm).message;
   }
 }
+
+console.log(refs.emailInput);
+console.log(refs.textareaInput);
+console.log(refs.submitButton);
 
 function writeToLocalStorage() {
   localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 }
 
 function onEmailFill(evt) {
-  const email = evt.target.value;
+  const email = evt.currentTarget.value;
   formData.email = email;
   writeToLocalStorage();
 }
 
 function onTextareaFill(evt) {
-  const message = evt.target.value;
+  const message = evt.currentTarget.value;
   formData.message = message;
   writeToLocalStorage();
 }
@@ -58,5 +47,4 @@ function onTextareaFill(evt) {
 function onFormSubmit(evt) {
   evt.preventDefault();
   console.log(JSON.parse(localStorage.getItem('feedback-form-state')));
-  evt.target.reset();
 }
